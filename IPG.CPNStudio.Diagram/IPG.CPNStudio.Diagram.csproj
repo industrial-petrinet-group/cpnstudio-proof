@@ -63,9 +63,6 @@
     <Compile Include="ConnectionDragEvents.cs" />
     <Compile Include="ConnectorItem.cs" />
     <Compile Include="ConnectorItemDragEvents.cs" />
-    <Compile Include="DiagramControl.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NetworkView.cs" />

@@ -32,7 +32,7 @@ namespace IPG.CPNStudio.Diagram
             DependencyProperty.Register("ZIndex", typeof(int), typeof(NodeItem),
                 new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        internal static readonly DependencyProperty ParentNetworkViewProperty =
+        public static readonly DependencyProperty ParentNetworkViewProperty =
             DependencyProperty.Register("ParentNetworkView", typeof(NetworkView), typeof(NodeItem), 
                 new FrameworkPropertyMetadata(ParentNetworkView_PropertyChanged));
 

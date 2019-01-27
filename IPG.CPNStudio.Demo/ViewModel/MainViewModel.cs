@@ -66,7 +66,7 @@ namespace IPG.CPNStudio.Demo.ViewModel
                 //
                 EventHandler<EventArgs> sizeChangedEventHandler = null;
                 sizeChangedEventHandler =
-                    delegate (object sender, EventArgs e)
+                    delegate(object sender, EventArgs e)
                     {
                         //
                         // This event handler will be called after the size of the node has been determined.
@@ -108,19 +108,43 @@ namespace IPG.CPNStudio.Demo.ViewModel
             // Create some nodes and add them to the view-model.
             //
             NodeViewModel node1 = CreateNode("Node1", new Point(100, 60), false);
-            NodeViewModel node2 = CreateNode("Node2", new Point(350, 80), false);
+            NodeViewModel node2 = CreateNode("Node2", new Point(300, 60), false);
+            NodeViewModel node3 = CreateNode("Node3", new Point(500, 60), false);
+            NodeViewModel node4 = CreateNode("Node4", new Point(100, 200), false);
+            NodeViewModel node5 = CreateNode("Node5", new Point(300, 200), false);
+            NodeViewModel node6 = CreateNode("Node6", new Point(500, 200), false);
 
-            //
-            // Create a connection between the nodes.
-            //
-            ConnectionViewModel connection = new ConnectionViewModel();
-            connection.SourceConnector = node1.OutputConnectors[0];
-            connection.DestConnector = node2.InputConnectors[0];
 
-            //
-            // Add the connection to the view-model.
-            //
-            this.Network.Connections.Add(connection);
+            this.Network.Connections.Add(new ConnectionViewModel()
+            {
+                SourceConnector = node1.OutputConnectors[0],
+                DestConnector = node2.InputConnectors[0]
+            });
+
+            this.Network.Connections.Add(new ConnectionViewModel()
+            {
+                SourceConnector = node2.OutputConnectors[0],
+                DestConnector = node3.InputConnectors[0]
+            });
+
+            this.Network.Connections.Add(new ConnectionViewModel()
+            {
+                SourceConnector = node2.OutputConnectors[1],
+                DestConnector = node4.InputConnectors[0]
+            });
+
+            this.Network.Connections.Add(new ConnectionViewModel()
+            {
+                SourceConnector = node4.OutputConnectors[0],
+                DestConnector = node5.InputConnectors[0]
+            });
+
+            this.Network.Connections.Add(new ConnectionViewModel()
+            {
+                SourceConnector = node4.OutputConnectors[1],
+                DestConnector = node6.InputConnectors[0]
+            });
+
         }
 
 

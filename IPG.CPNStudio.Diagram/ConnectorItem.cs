@@ -16,11 +16,11 @@ namespace IPG.CPNStudio.Diagram
         public static readonly DependencyProperty HotspotProperty =
             DependencyProperty.Register("Hotspot", typeof(Point), typeof(ConnectorItem));
 
-        internal static readonly DependencyProperty ParentNetworkViewProperty =
+        public static readonly DependencyProperty ParentNetworkViewProperty =
             DependencyProperty.Register("ParentNetworkView", typeof(NetworkView), typeof(ConnectorItem),
                 new FrameworkPropertyMetadata(ParentNetworkView_PropertyChanged));
 
-        internal static readonly DependencyProperty ParentNodeItemProperty =
+        public static readonly DependencyProperty ParentNodeItemProperty =
             DependencyProperty.Register("ParentNodeItem", typeof(NodeItem), typeof(ConnectorItem));
 
         internal static readonly RoutedEvent ConnectorDragStartedEvent =
