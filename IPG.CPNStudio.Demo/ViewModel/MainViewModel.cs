@@ -1,6 +1,13 @@
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using Microsoft.Msagl.Core;
+using Microsoft.Msagl.Core.Geometry.Curves;
+using Microsoft.Msagl.Core.Routing;
+using Microsoft.Msagl.Layout.MDS;
+using Microsoft.Msagl.Miscellaneous;
 using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace IPG.CPNStudio.Demo.ViewModel
 {
@@ -20,6 +27,10 @@ namespace IPG.CPNStudio.Demo.ViewModel
     {
         NetworkViewModel network;
 
+        ICommand _layoutCommand;
+
+        CancelToken _cancelToken;
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -35,14 +46,47 @@ namespace IPG.CPNStudio.Demo.ViewModel
             ////}
             ///
             PopulateWithTestData();
+
+            _cancelToken = new CancelToken();
+
+            LayoutCommand = new RelayCommand(Layout );
+        }
+
+        private void Layout()
+        {
+            LayoutHelpers.CalculateLayout(network, GetMdsLayoutSettings(), _cancelToken);
+
+            foreach (var node in network.NodesSource)
+            {
+                node.X = node.Center.X + 300;
+                node.Y = node.Center.Y + 300;
+            }
+        }
+
+
+        MdsLayoutSettings GetMdsLayoutSettings()
+        {
+            var settings = new MdsLayoutSettings
+            {
+                EdgeRoutingSettings = { KeepOriginalSpline = true, EdgeRoutingMode = EdgeRoutingMode.None },
+                RemoveOverlaps = false
+            };
+            return settings;
+        }
+     
+
+        public static ICurve CreateCurve(double x, double y, double w, double h)
+        {
+            var center = new Microsoft.Msagl.Core.Geometry.Point(x + (w / 2), y + (h / 2));
+            return CurveFactory.CreateRectangle(w, h, center);
         }
 
         /// <summary>
         /// Create a node and add it to the view-model.
         /// </summary>
-        public NodeViewModel CreateNode(string name, Point nodeLocation, bool centerNode)
+        public NodeViewModel CreateNode(string name, Point nodeLocation,double width, double height, bool centerNode)
         {
-            var node = new NodeViewModel(name);
+            var node = new NodeViewModel(CreateCurve(nodeLocation.X,nodeLocation.Y, width,height),name);
             node.X = nodeLocation.X;
             node.Y = nodeLocation.Y;
 
@@ -92,7 +136,7 @@ namespace IPG.CPNStudio.Demo.ViewModel
             //
             // Add the node to the view-model.
             //
-            this.Network.Nodes.Add(node);
+            this.Network.AddNode(node);
 
             return node;
         }
@@ -107,43 +151,25 @@ namespace IPG.CPNStudio.Demo.ViewModel
             //
             // Create some nodes and add them to the view-model.
             //
-            NodeViewModel node1 = CreateNode("Node1", new Point(100, 60), false);
-            NodeViewModel node2 = CreateNode("Node2", new Point(300, 60), false);
-            NodeViewModel node3 = CreateNode("Node3", new Point(500, 60), false);
-            NodeViewModel node4 = CreateNode("Node4", new Point(100, 200), false);
-            NodeViewModel node5 = CreateNode("Node5", new Point(300, 200), false);
-            NodeViewModel node6 = CreateNode("Node6", new Point(500, 200), false);
+            NodeViewModel node1 = CreateNode("Node1", new Point(100, 60),100,100, false);
+            NodeViewModel node2 = CreateNode("Node2", new Point(300, 60), 100, 100, false);
+            NodeViewModel node3 = CreateNode("Node3", new Point(500, 60), 100, 100, false);
+            NodeViewModel node4 = CreateNode("Node4", new Point(100, 200), 100, 100, false);
+            NodeViewModel node5 = CreateNode("Node5", new Point(300, 200), 100, 100, false);
+            NodeViewModel node6 = CreateNode("Node6", new Point(500, 200), 100, 100, false);
 
 
-            this.Network.Connections.Add(new ConnectionViewModel()
-            {
-                SourceConnector = node1.OutputConnectors[0],
-                DestConnector = node2.InputConnectors[0]
-            });
+            this.Network.AddConnection(new ConnectionViewModel(node1, node1.OutputConnectors[0], node2, node2.InputConnectors[0]));
 
-            this.Network.Connections.Add(new ConnectionViewModel()
-            {
-                SourceConnector = node2.OutputConnectors[0],
-                DestConnector = node3.InputConnectors[0]
-            });
+            this.Network.AddConnection(new ConnectionViewModel(node2, node2.OutputConnectors[0], node3, node3.InputConnectors[0]));
 
-            this.Network.Connections.Add(new ConnectionViewModel()
-            {
-                SourceConnector = node2.OutputConnectors[1],
-                DestConnector = node4.InputConnectors[0]
-            });
+            this.Network.AddConnection(new ConnectionViewModel(node2, node2.OutputConnectors[1], node4, node4.InputConnectors[0]));
 
-            this.Network.Connections.Add(new ConnectionViewModel()
-            {
-                SourceConnector = node4.OutputConnectors[0],
-                DestConnector = node5.InputConnectors[0]
-            });
+            this.Network.AddConnection(new ConnectionViewModel(node4, node4.OutputConnectors[0], node5, node5.InputConnectors[0]));
 
-            this.Network.Connections.Add(new ConnectionViewModel()
-            {
-                SourceConnector = node4.OutputConnectors[1],
-                DestConnector = node6.InputConnectors[0]
-            });
+            this.Network.AddConnection(new ConnectionViewModel(node4, node4.OutputConnectors[1], node6, node6.InputConnectors[0]));
+
+       
 
         }
 
@@ -166,5 +192,18 @@ namespace IPG.CPNStudio.Demo.ViewModel
             }
         }
 
+        public ICommand LayoutCommand
+        {
+            get
+            {
+                return _layoutCommand;
+            }
+            set
+            {
+                _layoutCommand = value;
+
+                RaisePropertyChanged("LayoutCommand");
+            }
+           }
     }
 }

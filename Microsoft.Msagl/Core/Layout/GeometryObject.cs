@@ -1,4 +1,5 @@
 using System;
+using GalaSoft.MvvmLight;
 using Microsoft.Msagl.Core.Geometry;
 
 
@@ -9,7 +10,7 @@ namespace Microsoft.Msagl.Core.Layout {
 #if TEST_MSAGL
     [Serializable]
 #endif
-    abstract public class GeometryObject {
+    abstract public class GeometryObject : ViewModelBase {
        
         GeometryObject geometryParent;
         /// <summary>

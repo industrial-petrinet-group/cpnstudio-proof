@@ -5,13 +5,14 @@ using System.Text;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized; 
 using IPG.CPNStudio.Diagram.Utils;
+using Microsoft.Msagl.Core.Layout;
 
 namespace IPG.CPNStudio.Demo.ViewModel
 {
     /// <summary>
     /// Defines a network of nodes and connections between the nodes.
     /// </summary>
-    public sealed class NetworkViewModel
+    public sealed class NetworkViewModel : GeometryGraph
     {
         #region Internal Data Members
 
@@ -30,7 +31,7 @@ namespace IPG.CPNStudio.Demo.ViewModel
         /// <summary>
         /// The collection of nodes in the network.
         /// </summary>
-        public ImpObservableCollection<NodeViewModel> Nodes
+        public ImpObservableCollection<NodeViewModel> NodesSource
         {
             get
             {
@@ -72,6 +73,18 @@ namespace IPG.CPNStudio.Demo.ViewModel
                 connection.SourceConnector = null;
                 connection.DestConnector = null;
             }
+        }
+
+        public  void AddNode(NodeViewModel node)
+        {
+            this.NodesSource.Add(node);
+            this.Nodes.Add(node);
+        }
+
+        internal void AddConnection(ConnectionViewModel connectionViewModel)
+        {
+            this.Connections.Add(connectionViewModel);
+            this.Edges.Add(connectionViewModel);
         }
 
         #endregion Private Methods

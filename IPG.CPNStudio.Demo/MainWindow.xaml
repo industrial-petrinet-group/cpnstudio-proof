@@ -297,7 +297,20 @@
             <ColumnDefinition Width="120" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Diagram:NetworkView ConnectionsSource="{Binding Path=Network.Connections}" NodesSource="{Binding Network.Nodes}" />
+        
+      
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Layout" Width="80" Command="{Binding LayoutCommand}" Margin="5"/>
+            </StackPanel>
+           
+            <Diagram:NetworkView Grid.Row="1"  ConnectionsSource="{Binding Path=Network.Connections}" NodesSource="{Binding Network.NodesSource}" />
+
+        </Grid>
         <StackPanel Margin="10">
             <RadioButton>
                 <StackPanel Margin="5">

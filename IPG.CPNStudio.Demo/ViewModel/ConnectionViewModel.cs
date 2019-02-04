@@ -7,14 +7,23 @@ using System.Diagnostics;
 using System.Windows.Media;
 using System.Windows;
 using GalaSoft.MvvmLight;
+using Microsoft.Msagl.Core.Layout;
 
 namespace IPG.CPNStudio.Demo.ViewModel
 {
     /// <summary>
     /// Defines a connection between two connectors (aka connection points) of two nodes.
     /// </summary>
-    public sealed class ConnectionViewModel : ViewModelBase
+    public sealed class ConnectionViewModel :    Edge
     {
+
+        public ConnectionViewModel(NodeViewModel sourceNode,ConnectorViewModel sourceConnector,
+            NodeViewModel targetNode, ConnectorViewModel destinationConnector) : base(sourceNode, targetNode)
+        {
+            this.SourceConnector = sourceConnector;
+            this.DestConnector = destinationConnector;
+        }
+
         #region Internal Data Members
 
         /// <summary>

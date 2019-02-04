@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using GalaSoft.MvvmLight;
 using IPG.CPNStudio.Diagram.Utils;
+using Microsoft.Msagl.Core.Layout;
+using Microsoft.Msagl.Core.Geometry.Curves;
 
 namespace IPG.CPNStudio.Demo.ViewModel
 {
@@ -13,7 +15,7 @@ namespace IPG.CPNStudio.Demo.ViewModel
     /// Defines a node in the view-model.
     /// Nodes are connected to other nodes through attached connectors (aka anchor/connection points).
     /// </summary>
-    public sealed class NodeViewModel : ViewModelBase
+    public sealed class NodeViewModel : Node
     {
         #region Private Data Members
 
@@ -67,6 +69,16 @@ namespace IPG.CPNStudio.Demo.ViewModel
 
         public NodeViewModel()
         {
+        }
+
+        public NodeViewModel(ICurve curve) :base(curve)
+        {
+
+        }
+
+        public NodeViewModel(ICurve curve, object userData) :base(curve,userData)
+        {
+            this.name =(string) userData;
         }
 
         public NodeViewModel(string name)

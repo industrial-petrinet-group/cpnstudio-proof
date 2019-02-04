@@ -127,6 +127,10 @@
       <Project>{dfbd30a3-64b1-4eab-b01c-a14503ca4110}</Project>
       <Name>IPG.CPNStudio.Diagram</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Microsoft.Msagl\Msagl.csproj">
+      <Project>{415d3e3f-7105-46c1-84d2-7ecb34213d92}</Project>
+      <Name>Msagl</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
