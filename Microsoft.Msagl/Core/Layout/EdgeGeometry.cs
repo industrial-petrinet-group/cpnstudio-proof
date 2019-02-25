@@ -92,23 +92,23 @@ namespace Microsoft.Msagl.Core.Layout {
             set { smoothedPolyline = value; }
         }
 
-        /// <summary>
-        ///     getting the bounding box of the curve and optional arrow heads
-        /// </summary>
-        public Rectangle BoundingBox {
-            get {
-                Rectangle bBox = Curve.BoundingBox;
-                if (SourceArrowhead != null)
-                    bBox.Add(SourceArrowhead.TipPosition);
-                if (TargetArrowhead != null)
-                    bBox.Add(TargetArrowhead.TipPosition);
-                double del = 0.5*LineWidth;
-                var delta = new Point(-del, del);
-                bBox.Add(bBox.LeftTop + delta);
-                bBox.Add(bBox.RightBottom - delta);
-                return bBox;
-            }
-        }
+        ///// <summary>
+        /////     getting the bounding box of the curve and optional arrow heads
+        ///// </summary>
+        //public Rectangle BoundingBox {
+        //    get {
+        //        Rectangle bBox = Curve.BoundingBox;
+        //        if (SourceArrowhead != null)
+        //            bBox.Add(SourceArrowhead.TipPosition);
+        //        if (TargetArrowhead != null)
+        //            bBox.Add(TargetArrowhead.TipPosition);
+        //        double del = 0.5*LineWidth;
+        //        var delta = new Point(-del, del);
+        //        bBox.Add(bBox.LeftTop + delta);
+        //        bBox.Add(bBox.RightBottom - delta);
+        //        return bBox;
+        //    }
+        //}
         
         internal void SetSmoothedPolylineAndCurve(SmoothedPolyline poly) {
             SmoothedPolyline = poly;

@@ -139,14 +139,21 @@ namespace IPG.CPNStudio.Diagram
 
             if (adornerShowState != AdornerShowState.FadingOut)
             {
-                adorner.Opacity = 0.0;
+                if (adorner != null)
+                {
+                    adorner.Opacity = 0.0;
+                } 
             }
 
             DoubleAnimation doubleAnimation = new DoubleAnimation(1.0, new Duration(TimeSpan.FromSeconds(FadeInTime)));
             doubleAnimation.Completed += new EventHandler(fadeInAnimation_Completed);
             doubleAnimation.Freeze();
-                
-            adorner.BeginAnimation(FrameworkElement.OpacityProperty, doubleAnimation);
+
+            if (adorner != null)
+            {
+                adorner.BeginAnimation(FrameworkElement.OpacityProperty, doubleAnimation);
+            }
+          
 
             adornerShowState = AdornerShowState.FadingIn;
         }
@@ -176,7 +183,11 @@ namespace IPG.CPNStudio.Diagram
             fadeOutAnimation.Completed += new EventHandler(fadeOutAnimation_Completed);
             fadeOutAnimation.Freeze();
 
-            adorner.BeginAnimation(FrameworkElement.OpacityProperty, fadeOutAnimation);
+            if (adorner != null)
+            {
+                adorner.BeginAnimation(FrameworkElement.OpacityProperty, fadeOutAnimation); 
+            }
+           
 
             adornerShowState = AdornerShowState.FadingOut;
         }
