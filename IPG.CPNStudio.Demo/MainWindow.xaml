@@ -305,7 +305,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Layout" Width="80" Command="{Binding LayoutCommand}" Margin="5"/>
+                <Button Name="LayoutButton" Content="Layout" Width="80" Command="{Binding LayoutCommand}" Margin="5"/>
             </StackPanel>
            
             <Diagram:NetworkView Grid.Row="1"  ConnectionsSource="{Binding Path=Network.Connections}" NodesSource="{Binding Network.NodesSource}" />
