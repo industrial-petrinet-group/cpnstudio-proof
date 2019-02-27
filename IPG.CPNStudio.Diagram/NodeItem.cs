@@ -36,6 +36,10 @@ namespace IPG.CPNStudio.Diagram
             DependencyProperty.Register("ParentNetworkView", typeof(NetworkView), typeof(NodeItem), 
                 new FrameworkPropertyMetadata(ParentNetworkView_PropertyChanged));
 
+        public static readonly DependencyProperty EditingProperty =
+            DependencyProperty.Register("Editing", typeof(bool), typeof(NodeItem),
+                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         internal static readonly RoutedEvent NodeDragStartedEvent =
             EventManager.RegisterRoutedEvent("NodeDragStarted", RoutingStrategy.Bubble, typeof(NodeDragStartedEventHandler), typeof(NodeItem));
 
@@ -115,6 +119,19 @@ namespace IPG.CPNStudio.Diagram
             {
                 SetValue(ParentNetworkViewProperty, value);
             }
+        }
+
+        public bool Editing
+        {
+            get
+            {
+                return (bool)GetValue(EditingProperty);
+            }
+            set
+            {
+                SetValue(EditingProperty, value);
+            }
+            
         }
 
         /// <summary>
@@ -277,6 +294,15 @@ namespace IPG.CPNStudio.Diagram
                 this.ParentNetworkView.SelectedNodes.Clear();
                 this.IsSelected = true;
             }
+        }
+
+        protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
+        {
+            base.OnMouseDoubleClick(e);
+            BringToFront();
+
+            Editing = true;
+ 
         }
 
         /// <summary>

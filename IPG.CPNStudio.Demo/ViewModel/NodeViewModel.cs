@@ -39,6 +39,9 @@ namespace IPG.CPNStudio.Demo.ViewModel
         /// </summary>
         private int zIndex = 0;
 
+        private bool _isRectangle;
+
+
         /// <summary>
         /// The size of the node.
         /// 
@@ -130,6 +133,26 @@ namespace IPG.CPNStudio.Demo.ViewModel
             }
         }
 
+        public bool _editMode;
+        public bool EditMode
+        {
+            get
+            {
+                return _editMode;
+            }
+            set
+            {
+                if (_editMode == value)
+                {
+                    return;
+                }
+
+                _editMode = value;
+
+                RaisePropertyChanged( );
+            }
+        }
+
         /// <summary>
         /// The Y coordinate for the position of the node.
         /// </summary>
@@ -204,6 +227,26 @@ namespace IPG.CPNStudio.Demo.ViewModel
                 }
             }
         }
+
+        public bool IsRectangle
+        {
+            get
+            {
+                return _isRectangle;
+            }
+            set
+            {
+                if (_isRectangle == value)
+                {
+                    return;
+                }
+
+                _isRectangle = value;
+
+                RaisePropertyChanged();
+            }
+        }
+
 
         /// <summary>
         /// Event raised when the size of the node is changed.

@@ -52,8 +52,8 @@
                 <!--  The visual template.  -->
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Diagram:ConnectorItem}">
-                          
+                        <ControlTemplate  TargetType="{x:Type Diagram:ConnectorItem}" >
+                            <Border Width="20" Height="20" Background="Red" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -181,10 +181,10 @@
 
                         <!--  This rectangle is the main visual for the node.  -->
 
-                        <Rectangle  
+                        <Rectangle  x:Name="rect" 
                                    Stroke="{StaticResource nodeBorderBrush}"
                                    StrokeThickness="1.3" />
-                        <Ellipse   Stroke="{StaticResource nodeBorderBrush}"
+                        <Ellipse   x:Name="ellipse" Stroke="{StaticResource nodeBorderBrush}"
                                    StrokeThickness="1.3" />
 
                         <!--
@@ -192,27 +192,32 @@
                             The margin is negative so that the connectors overlap the body of the node and it's selection border.
                         -->
                         <Grid Margin="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
                             
                             <!--  The name of the node.  -->
-                            <TextBlock  
+                            <TextBlock  x:Name="txtBlock"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Text="{Binding Name}" Visibility="Collapsed" />
-                            <TextBox  
+                            <TextBox  x:Name="editBlock"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Text="{Binding Name}" Visibility="Visible" />
 
                             <!--  Displays the node's input connectors.  -->
-                            <ItemsControl    HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
+                            <ItemsControl    HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
                                           Focusable="False"
                                           ItemTemplate="{StaticResource inputConnectorTemplate}"
                                           ItemsSource="{Binding InputConnectors}" />
 
                             <!--  Displays the node's output connectors.  -->
-                            <ItemsControl    HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
+                            <ItemsControl Grid.Column="1"   HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
                                           Focusable="False"
                                           ItemTemplate="{StaticResource outputConnectorTemplate}"
                                           ItemsSource="{Binding OutputConnectors}" />
@@ -249,6 +254,25 @@
                         </Canvas>
                     </Diagram:AdornedControl.AdornerContent>-->
                 </Diagram:AdornedControl>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding IsRectangle}" Value="True">
+                        <Setter TargetName="rect" Property="Visibility" Value="Visible" />
+                        <Setter TargetName="ellipse" Property="Visibility" Value="Collapsed" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsRectangle}" Value="False">
+                        <Setter TargetName="rect" Property="Visibility" Value="Collapsed" />
+                        <Setter TargetName="ellipse" Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding EditMode}" Value="False">
+                        <Setter TargetName="editBlock" Property="Visibility" Value="Collapsed" />
+                        <Setter TargetName="txtBlock" Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding EditMode}" Value="True">
+                        <Setter TargetName="editBlock" Property="Visibility" Value="Collapsed" />
+                        <Setter TargetName="txtBlock" Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                    
+                </DataTemplate.Triggers>
             </DataTemplate>
 
         </ResourceDictionary>
@@ -269,12 +293,27 @@
             <StackPanel Orientation="Horizontal">
                 <Button Content="Layout" Width="80" Command="{Binding LayoutCommand}" Margin="5"/>
             </StackPanel>
-           
-            <Diagram:NetworkView Grid.Row="1"  ConnectionsSource="{Binding Path=Network.Connections}" NodesSource="{Binding Network.NodesSource}" />
+
+            <Diagram:NetworkView x:Name="networkControl" Grid.Row="1"   
+                                 ConnectionsSource="{Binding Path=Network.Connections}" 
+                                 NodesSource="{Binding Network.NodesSource}" 
+                                 MouseDown="NetworkView_MouseDown"
+                                  ConnectionDragStarted="networkControl_ConnectionDragStarted"
+                            QueryConnectionFeedback="networkControl_QueryConnectionFeedback"
+                            ConnectionDragging="networkControl_ConnectionDragging"                            
+                            ConnectionDragCompleted="networkControl_ConnectionDragCompleted"
+                            
+                            />
 
         </Grid>
         <StackPanel Margin="10">
-            <RadioButton>
+            <RadioButton IsChecked="{Binding NoneSelected}">
+                <StackPanel Margin="5">
+                     
+                    <TextBlock Text="None" TextAlignment="Center" />
+                </StackPanel>
+            </RadioButton>
+            <RadioButton IsChecked="{Binding EllipseSelected}">
                 <StackPanel Margin="5">
                     <Ellipse Width="64"
                              Height="32"
@@ -282,7 +321,7 @@
                     <TextBlock Text="Ellipse" TextAlignment="Center" />
                 </StackPanel>
             </RadioButton>
-            <RadioButton Margin="0,10,0,0">
+            <RadioButton Margin="0,10,0,0" IsChecked="{Binding RectangleSelected}">
                 <StackPanel Margin="5">
                     <Rectangle Width="64"
                                Height="32"

@@ -625,8 +625,10 @@ namespace IPG.CPNStudio.Diagram
             }
 
             AddAdorner();
-
-            RaiseEvent(new AdornerEventArgs(AdornerShownEvent, this, this.adorner.Child));
+            if (this.adorner != null)
+            {
+                RaiseEvent(new AdornerEventArgs(AdornerShownEvent, this, this.adorner.Child));
+            }
         }
 
         /// <summary>
@@ -640,7 +642,10 @@ namespace IPG.CPNStudio.Diagram
                 return;
             }
 
-            RaiseEvent(new AdornerEventArgs(AdornerHiddenEvent, this, this.adorner.Child));
+            if (this.adorner != null)
+            {
+                RaiseEvent(new AdornerEventArgs(AdornerHiddenEvent, this, this.adorner.Child));
+            }
 
             RemoveAdorner();
         }
