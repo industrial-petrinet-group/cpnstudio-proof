@@ -180,19 +180,21 @@ foreach (var intEdgeList in Database.RegularMultiedges) {
         //}
 
         internal static void UpdateLabel(Edge e, Anchor anchor){
+            var label = e.Label;
+            var labelBox = label.BoundingBox;
             LineSegment labelSide = null;
             if (anchor.LabelToTheRightOfAnchorCenter){
-                e.Label.Center = new Point(anchor.X + anchor.RightAnchor/2, anchor.Y);
-                labelSide = new LineSegment(e.LabelBBox.LeftTop, e.LabelBBox.LeftBottom);
+                label.Center = new Point(anchor.X + anchor.RightAnchor/2, anchor.Y);
+                labelSide = new LineSegment(labelBox.LeftTop, labelBox.LeftBottom);
             }
             else if (anchor.LabelToTheLeftOfAnchorCenter){
-                e.Label.Center = new Point(anchor.X - anchor.LeftAnchor/2, anchor.Y);
-                labelSide = new LineSegment(e.LabelBBox.RightTop, e.LabelBBox.RightBottom);
+                label.Center = new Point(anchor.X - anchor.LeftAnchor/2, anchor.Y);
+                labelSide = new LineSegment(labelBox.RightTop, labelBox.RightBottom);
             }
             ICurve segmentInFrontOfLabel = GetSegmentInFrontOfLabel(e.Curve, e.Label.Center.Y);
             if (segmentInFrontOfLabel == null)
                 return;
-            if (Curve.GetAllIntersections(e.Curve, Curve.PolyFromBox(e.LabelBBox), false).Count == 0){
+            if (Curve.GetAllIntersections(e.Curve, Curve.PolyFromBox(labelBox), false).Count == 0){
                 Point curveClosestPoint;
                 Point labelSideClosest;
                 if (FindClosestPoints(out curveClosestPoint, out labelSideClosest, segmentInFrontOfLabel, labelSide)){

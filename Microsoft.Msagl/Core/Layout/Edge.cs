@@ -139,12 +139,12 @@ namespace Microsoft.Msagl.Core.Layout {
         public Edge() : this(null, null) {
         }
         
-        /// <summary>
-        /// The label bounding box
-        /// </summary>
-        internal Rectangle LabelBBox {
-            get { return Label.BoundingBox; }
-        }
+        ///// <summary>
+        ///// The label bounding box
+        ///// </summary>
+        //internal Rectangle LabelBBox {
+        //    get { return Label.BoundingBox; }
+        //}
 
         double length = 1;
 
@@ -279,8 +279,9 @@ namespace Microsoft.Msagl.Core.Layout {
             if (targetArrow != null)
                 targetArrow.TipPosition = matrix * targetArrow.TipPosition;
 
-            if (Label != null)
-                Label.Center = matrix * LabelBBox.Center;
+            var l = this.Label;
+            if (l != null)
+                l.Center = matrix * l.BoundingBox.Center;
         }
 
         /// <summary>

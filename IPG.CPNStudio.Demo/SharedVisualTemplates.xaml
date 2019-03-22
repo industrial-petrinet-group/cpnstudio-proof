@@ -72,30 +72,9 @@
     <DataTemplate
         x:Key="inputConnectorTemplate"
         >
-        <Grid
-            Margin="0,2,0,0"
-            >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <!-- The 'ConnectorItem' or anchor point for the connector. -->
+        <NetworkUI:ConnectorItem  />
 
-            <!-- The 'ConnectorItem' or anchor point for the connector. -->
-            <NetworkUI:ConnectorItem 
-                Grid.Column="0"
-                Width="15"
-                Height="15"
-                Cursor="Hand"                    
-                />
-
-            <!-- The name of the connector. -->            
-            <TextBlock
-                Grid.Column="1"
-                Margin="5,0,0,0"
-                Text="{Binding Name}"
-                VerticalAlignment="Center"
-                />
-        </Grid>
     </DataTemplate>
 
     <!-- 
@@ -104,42 +83,11 @@
     <DataTemplate
         x:Key="outputConnectorTemplate"
         >
-        <Grid
-            HorizontalAlignment="Right"
-            Margin="0,2,0,0"
-            >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <!-- The name of the connector. -->
-            <TextBlock
-                Grid.Column="0"
-                Text="{Binding Name}"
-                VerticalAlignment="Center"
-                Margin="0,0,5,0"
-                />
-
-            <Grid
-                Grid.Column="1"
-                Width="15"
-                Height="15"
-                Cursor="Hand"
-                >
+       
 
                 <!-- The 'ConnectorItem' or anchor point for the connector. -->
                 <NetworkUI:ConnectorItem />
-                    
-                <!-- Show a black dot at the start of the arrow when connected. -->
-                <Ellipse
-                    Visibility="{Binding IsConnectionAttached, Converter={StaticResource booleanToVisibilityConverter}}"
-                    Margin="3"
-                    Fill="{StaticResource connectionBrush}"
-                    IsHitTestVisible="False"
-                    />
-            </Grid>
-        </Grid>
+                
     </DataTemplate>
 
 </ResourceDictionary>

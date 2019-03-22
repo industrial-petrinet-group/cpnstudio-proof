@@ -1,7 +1,13 @@
 # CPN-Studio Technology Proof Of Concept
+
 Proof of concept of technologies, methodologies and algorithms to develop the CPNTools replacement CPNStudio
  
+## Build Status
+
+Master: [![Build status](https://ci.appveyor.com/api/projects/status/w1im7wq17sh3ldso/branch/master?svg=true)](https://ci.appveyor.com/project/ThomasMaierhofer/cpnstudio-proof/branch/master)
+ 
 ## Links
+
 * http://cpntools.org/ (CPN Tools)
 * https://github.com/Omenia/robotframework-whitelibrary (UI Testing with Robot Framework)
 * https://github.com/Microsoft/automatic-graph-layout ( Microsoft Automatic Graph Layout)
