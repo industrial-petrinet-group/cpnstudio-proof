@@ -1,16 +1,16 @@
 *** Settings ***
-Library    WhiteLibrary
-Library    Process
-Resource    resource.robot
+Library           WhiteLibrary
+Library           Process
+Resource          resource.robot
 
 *** Test Cases ***
 Simple Test
-    Attach Application By Name  IPG.CPNStudio.Demo
-    Attach Window  MainWindow
-    Sleep  5
-    Click Button  LayoutButton 
-    $item1 = Get Item  text:item1
-    
+    ${item}=    Set Variable    ${TEMPDIR}${/}bla
+    Comment    PAUSE
+    ${item}=    Set Variable    ${TEMPDIR}${/}blub
+    Attach Application By Name    IPG.CPNStudio.Demo
+    Attach Window    MainWindow
+    Sleep    5
+    Click Button    LayoutButton
+    ${item1}= Get Item    text:item1
     # Close Application
-
-
