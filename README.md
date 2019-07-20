@@ -2,6 +2,15 @@
 
 Proof of concept of technologies, methodologies and algorithms to develop the CPNTools replacement CPNStudio
  
+#Directories
+
+* DrawingAndTestingProof 
+  - Drawing with MSAGL 
+  - Testing with Whitelibrary
+  
+
+
+
 ## Build Status
 
 Master: [![Build status](https://ci.appveyor.com/api/projects/status/w1im7wq17sh3ldso/branch/master?svg=true)](https://ci.appveyor.com/project/ThomasMaierhofer/cpnstudio-proof/branch/master)
